@@ -1,5 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import _ from "lodash";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import BaseButton from "../components/stateless/buttons/base-button";
 import FormContainer from "../components/stateless/containers/form-container";
@@ -17,7 +18,11 @@ const HomePage = () => {
     formState: { errors },
     reset,
   } = useForm({ mode: "onBlur", defaultValues: { [URL_INPUT_NAME]: "" } });
-  const onSubmit = (values) => console.log(values);
+  const [loading, setLoading] = useState(false);
+  const onSubmit = (values) => {
+    setLoading(true);
+    console.log(values);
+  };
   return (
     <MainContainer>
       <PageTitle>{PAGE_TITLE}</PageTitle>
@@ -33,7 +38,7 @@ const HomePage = () => {
           />
         </FormGridItemContainer>
         <FormGridItemContainer>
-          <BaseButton>Shorten URL</BaseButton>
+          <BaseButton loading={loading}>Shorten URL</BaseButton>
         </FormGridItemContainer>
       </FormContainer>
     </MainContainer>
