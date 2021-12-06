@@ -1,15 +1,19 @@
 import { Grid, Typography } from "@mui/material";
-import _ from "lodash";
+import _, { set } from "lodash";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import BaseButton from "../components/stateless/buttons/base-button";
+import CopyButton from "../components/stateless/buttons/copy-button";
 import FormContainer from "../components/stateless/containers/form-container";
 import FormGridItemContainer from "../components/stateless/containers/form-grid-item-container";
 import MainContainer from "../components/stateless/containers/main-container";
+import ShortUrlContainer from "../components/stateless/containers/short-url-container";
 import UrlInput from "../components/stateless/inputs/url-input";
 import PageTitle from "../components/stateless/typography/page-title";
+import ShortUrlDisplay from "../components/stateless/typography/short-url-display";
 import { URL_INPUT_RULES } from "../constants/form-validation";
 import { PAGE_TITLE, URL_INPUT_LABEL, URL_INPUT_NAME, URL_INPUT_PLACEHOLDER } from "../constants/strings";
+import { shortenUrl } from "../utils/api";
 
 const HomePage = () => {
   const {
@@ -19,9 +23,24 @@ const HomePage = () => {
     reset,
   } = useForm({ mode: "onBlur", defaultValues: { [URL_INPUT_NAME]: "" } });
   const [loading, setLoading] = useState(false);
-  const onSubmit = (values) => {
+  const [shortUrl, setShortUrl] = useState();
+  const [copied, setCopied] = useState(false);
+  const onSubmit = async (values) => {
     setLoading(true);
-    console.log(values);
+    const url = await shortenUrl(_.get(values, URL_INPUT_NAME));
+    setShortUrl(url);
+    if (url) setLoading(false);
+  };
+  const copyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(shortUrl);
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <MainContainer>
@@ -41,6 +60,12 @@ const HomePage = () => {
           <BaseButton loading={loading}>Shorten URL</BaseButton>
         </FormGridItemContainer>
       </FormContainer>
+      {shortUrl && (
+        <ShortUrlContainer>
+          <ShortUrlDisplay>{shortUrl}</ShortUrlDisplay>
+          <CopyButton copied={copied} onClick={copyUrl} />
+        </ShortUrlContainer>
+      )}
     </MainContainer>
   );
 };
