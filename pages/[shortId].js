@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { getPages } from "../utils/api";
+import { getPages, getRedirectUrl } from "../utils/api";
 
 const RedirectPage = ({ shortId }) => {
   return <Typography>{shortId}</Typography>;
@@ -7,17 +7,13 @@ const RedirectPage = ({ shortId }) => {
 
 export default RedirectPage;
 
-export async function getStaticPaths() {
-  const pages = await getPages();
-  const paths = pages.map((page) => ({ params: { shortId: page.shortId } }));
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
-  const { shortId } = params;
+export async function getServerSideProps(context) {
+  const { shortId } = context.params;
+  const redirectUrl = await getRedirectUrl(shortId);
   return {
-    props: {
-      shortId,
+    redirect: {
+      permanent: true,
+      destination: redirectUrl,
     },
   };
 }
