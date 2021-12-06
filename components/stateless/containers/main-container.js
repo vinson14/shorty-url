@@ -7,7 +7,7 @@ const MainContainer = ({ children }) => {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "stretch",
   };
   return <Container sx={sx}>{children}</Container>;
 };
