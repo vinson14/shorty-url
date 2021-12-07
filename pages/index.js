@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import _, { set } from "lodash";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import BaseButton from "../components/stateless/buttons/base-button";
 import CopyButton from "../components/stateless/buttons/copy-button";
@@ -26,12 +26,15 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [shortUrl, setShortUrl] = useState();
   const [copied, setCopied] = useState(false);
-  const baseUrl = window.location.href;
+  const [baseUrl, setBaseUrl] = useState("");
+  useEffect(() => {
+    setBaseUrl(window.location.href);
+  }, []);
+
   const onSubmit = async (values) => {
-    console.log("onSubmit", values);
     setLoading(true);
     const shortId = await shortenUrl(_.get(values, URL_INPUT_NAME));
-    setShortUrl(`${baseUrl}/${shortId}`);
+    setShortUrl(`${baseUrl}${shortId}`);
     if (shortId) {
       setLoading(false);
       reset();
