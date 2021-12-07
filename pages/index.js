@@ -1,5 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import _, { set } from "lodash";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import BaseButton from "../components/stateless/buttons/base-button";
@@ -15,7 +16,7 @@ import { URL_INPUT_RULES } from "../constants/form-validation";
 import { PAGE_TITLE, URL_INPUT_LABEL, URL_INPUT_NAME, URL_INPUT_PLACEHOLDER } from "../constants/strings";
 import { shortenUrl } from "../utils/api";
 
-const HomePage = () => {
+const HomePage = ({ baseUrl }) => {
   const {
     control,
     handleSubmit,
@@ -27,9 +28,9 @@ const HomePage = () => {
   const [copied, setCopied] = useState(false);
   const onSubmit = async (values) => {
     setLoading(true);
-    const url = await shortenUrl(_.get(values, URL_INPUT_NAME));
-    setShortUrl(url);
-    if (url) setLoading(false);
+    const shortId = await shortenUrl(_.get(values, URL_INPUT_NAME));
+    setShortUrl(`${baseUrl}/${shortId}`);
+    if (shortId) setLoading(false);
   };
   const copyUrl = async () => {
     try {
@@ -71,3 +72,11 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+export async function getStaticProps() {
+  return {
+    props: {
+      baseUrl: process.env.BASE_URL,
+    },
+  };
+}

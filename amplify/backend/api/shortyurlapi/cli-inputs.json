@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/urls": {
+      "name": "/urls",
+      "lambdaFunction": "shortyurlnodejs",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

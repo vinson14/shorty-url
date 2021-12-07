@@ -1,0 +1,10 @@
+{
+  "resourceName": "shortyurl",
+  "tableName": "shortyurl",
+  "partitionKey": {
+    "fieldName": "shortId",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
