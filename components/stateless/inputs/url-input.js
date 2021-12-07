@@ -13,6 +13,7 @@ const UrlInput = ({ name, control, rules, error, ...props }) => {
           {...field}
           error={error ? true : false}
           helperText={error?.message}
+          inputProps={{ type: "url" }}
           InputLabelProps={{ shrink: true }}
           {...props}
         />
