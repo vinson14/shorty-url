@@ -15,7 +15,7 @@
       "function": {
         "shortyurlnodejs": {
           "deploymentBucketName": "amplify-shortyurl-dev-175502-deployment",
-          "s3Key": "amplify-builds/shortyurlnodejs-4d6a426a376256796242-build.zip"
+          "s3Key": "amplify-builds/shortyurlnodejs-78694646774363766855-build.zip"
         }
       }
     }

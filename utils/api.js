@@ -25,6 +25,7 @@ export const getPages = async () => {
 export const getRedirectUrl = async (shortId) => {
   const init = { headers: {} };
   const response = await API.get(apiName, `${path}/${shortId}`, init);
-  if (response.length) return response[0].url;
+  console.log(response);
+  if (response) return response.url;
   else return null;
 };
