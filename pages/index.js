@@ -30,7 +30,6 @@ const HomePage = () => {
   const baseUrl = useBaseUrl();
 
   const onSubmit = async (values) => {
-    console.log("onSubmit runs");
     setLoading(true);
     const shortId = await shortenUrl(_.get(values, URL_INPUT_NAME));
     setShortUrl(`${baseUrl}${shortId}`);
