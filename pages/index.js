@@ -26,11 +26,16 @@ const HomePage = ({ baseUrl }) => {
   const [loading, setLoading] = useState(false);
   const [shortUrl, setShortUrl] = useState();
   const [copied, setCopied] = useState(false);
+
   const onSubmit = async (values) => {
+    console.log("onSubmit", values);
     setLoading(true);
     const shortId = await shortenUrl(_.get(values, URL_INPUT_NAME));
     setShortUrl(`${baseUrl}/${shortId}`);
-    if (shortId) setLoading(false);
+    if (shortId) {
+      setLoading(false);
+      reset();
+    }
   };
   const copyUrl = async () => {
     try {

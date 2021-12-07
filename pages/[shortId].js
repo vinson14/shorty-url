@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import isUrl from "is-url";
 import { getRedirectUrl } from "../utils/api";
 
 const RedirectPage = () => {
@@ -13,7 +14,7 @@ export async function getServerSideProps(context) {
   return {
     redirect: {
       permanent: false,
-      destination: redirectUrl,
+      destination: isUrl(redirectUrl) ? redirectUrl : `http://${redirectUrl}`,
     },
   };
 }
