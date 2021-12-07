@@ -15,6 +15,7 @@ import ShortUrlDisplay from "../components/stateless/typography/short-url-displa
 import { URL_INPUT_RULES } from "../constants/form-validation";
 import { PAGE_TITLE, URL_INPUT_LABEL, URL_INPUT_NAME, URL_INPUT_PLACEHOLDER } from "../constants/strings";
 import { shortenUrl } from "../utils/api";
+import useBaseUrl from "../utils/useBaseUrl";
 
 const HomePage = () => {
   const {
@@ -26,10 +27,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [shortUrl, setShortUrl] = useState();
   const [copied, setCopied] = useState(false);
-  const [baseUrl, setBaseUrl] = useState("");
-  useEffect(() => {
-    setBaseUrl(window.location.href);
-  }, []);
+  const baseUrl = useBaseUrl();
 
   const onSubmit = async (values) => {
     setLoading(true);
