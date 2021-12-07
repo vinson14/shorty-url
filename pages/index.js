@@ -30,6 +30,7 @@ const HomePage = () => {
   const baseUrl = useBaseUrl();
 
   const onSubmit = async (values) => {
+    console.log("onSubmit runs");
     setLoading(true);
     const shortId = await shortenUrl(_.get(values, URL_INPUT_NAME));
     setShortUrl(`${baseUrl}${shortId}`);
@@ -64,7 +65,9 @@ const HomePage = () => {
           />
         </FormGridItemContainer>
         <FormGridItemContainer>
-          <BaseButton loading={loading}>Shorten URL</BaseButton>
+          <BaseButton type="submit" loading={loading}>
+            Shorten URL
+          </BaseButton>
         </FormGridItemContainer>
       </FormContainer>
       {shortUrl && (
